@@ -49,6 +49,11 @@ class Clipboard {
   static void WriteHTML(const std::u16string& html,
                         gin_helper::Arguments* args);
 
+  static std::u16string ReadHTMLSourceUrl(gin_helper::Arguments* args);
+  static void WriteHTMLWithSourceUrl(const std::u16string& html,
+                        const std::u16string& source_url,
+                        gin_helper::Arguments* args);
+
   static v8::Local<v8::Value> ReadBookmark(gin_helper::Arguments* args);
   static void WriteBookmark(const std::u16string& title,
                             const std::string& url,

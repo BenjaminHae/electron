@@ -36,6 +36,15 @@ ifdescribe(process.platform !== 'win32' || process.arch !== 'arm64')('clipboard 
     });
   });
 
+  describe('clipboard.readHTMLSourceUrl()', () => {
+    it('returns source url correctly', () => {
+      const text = '<string>Hi</string>';
+      const sourceUrl = 'https://www.electronjs.org/';
+      clipboard.writeHTMLWithSourceUrl(text, sourceUrl);
+      expect(clipboard.readHTMLSourceUrl()).to.equal(sourceUrl);
+    });
+  });
+
   describe('clipboard.readRTF', () => {
     it('returns rtf text correctly', () => {
       const rtf = '{\\rtf1\\ansi{\\fonttbl\\f0\\fswiss Helvetica;}\\f0\\pard\nThis is some {\\b bold} text.\\par\n}';

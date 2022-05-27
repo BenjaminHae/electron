@@ -200,6 +200,26 @@ void Clipboard::WriteHTML(const std::u16string& html,
   writer.WriteHTML(html, std::string());
 }
 
+std::u16string Clipboard::ReadHTMLSourceUrl(gin_helper::Arguments* args) {
+  std::u16string data;
+  std::u16string html;
+  std::string url;
+  uint32_t start;
+  uint32_t end;
+  ui::Clipboard* clipboard = ui::Clipboard::GetForCurrentThread();
+  clipboard->ReadHTML(GetClipboardBuffer(args), /* data_dst = */ nullptr, &html,
+                      &url, &start, &end);
+  return url;
+}
+
+void Clipboard::WriteHTMLWithSourceUrl(const std::u16string& html,
+                          const std::u16string& source_url,
+                          gin_helper::Arguments* args) {
+  ui::ScopedClipboardWriter writer(GetClipboardBuffer(args));
+  writer.WriteHTML(html, source_url);
+}
+
+
 v8::Local<v8::Value> Clipboard::ReadBookmark(gin_helper::Arguments* args) {
   std::u16string title;
   std::string url;
@@ -282,6 +302,8 @@ void Initialize(v8::Local<v8::Object> exports,
   dict.SetMethod("writeRTF", &electron::api::Clipboard::WriteRTF);
   dict.SetMethod("readHTML", &electron::api::Clipboard::ReadHTML);
   dict.SetMethod("writeHTML", &electron::api::Clipboard::WriteHTML);
+  dict.SetMethod("readHTMLSourceUrl", &electron::api::Clipboard::ReadHTMLSourceUrl);
+  dict.SetMethod("writeHTMLWithSourceUrl", &electron::api::Clipboard::WriteHTMLWithSourceUrl);
   dict.SetMethod("readBookmark", &electron::api::Clipboard::ReadBookmark);
   dict.SetMethod("writeBookmark", &electron::api::Clipboard::WriteBookmark);
   dict.SetMethod("readImage", &electron::api::Clipboard::ReadImage);
