@@ -79,6 +79,36 @@ const { clipboard } = require('electron')
 clipboard.writeHTML('<b>Hi</b>')
 ```
 
+### `clipboard.readHTMLSourceUrl([type])`
+
+* `type` string (optional) - Can be `selection` or `clipboard`; default is 'clipboard'. `selection` is only available on Linux.
+
+Returns `string` - The source url of the clipboard content.
+
+```js
+const { clipboard } = require('electron')
+
+clipboard.writeHTMLWithSourceUrl('<b>Hi</b>', 'https://www.electronjs.org/')
+const sourceUrl = clipboard.readHTMLSourceUrl()
+
+console.log(sourceUrl)
+// https://www.electronjs.org
+```
+
+### `clipboard.writeHTMLWithSourceUrl(markup, sourceUrl[, type])`
+
+* `markup` string
+* `sourceUrl` string
+* `type` string (optional) - Can be `selection` or `clipboard`; default is 'clipboard'. `selection` is only available on Linux.
+
+Writes `markup` and `sourceUrl` to the clipboard.
+
+```js
+const { clipboard } = require('electron')
+
+clipboard.writeHTMLWithSourceUrl('<b>Hi</b>', 'https://www.electronjs.org/')
+```
+
 ### `clipboard.readImage([type])`
 
 * `type` string (optional) - Can be `selection` or `clipboard`; default is 'clipboard'. `selection` is only available on Linux.
